@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "ObjectDetectionTrainingKey": "UNSET",
+    "ObjectDetectionPredictionKey": "UNSET",
+    "ObjectDetectionProjectName": "UNSET",
+    "ObjectDetectionIterationName": "UNSET",
+    "HandwrittenTextSubscriptionKey": "UNSET",
+    "HandwrittenTextApiEndpoint": "UNSET",
+    "AzureWebJobsStorage": "UNSET",
+    "Sketch2CodeAppFunctionEndPoint": "UNSET",
+    "Probability": "30",
+    "storageUrl": "UNSET",
+    "ComputerVisionDelay": "UNSET"
+  }
+}

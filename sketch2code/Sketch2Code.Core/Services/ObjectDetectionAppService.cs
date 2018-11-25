@@ -44,7 +44,40 @@ namespace Sketch2Code.Core
         }
         public async Task<IList<PredictedObject>> GetPredictionAsync(byte[] data)
         {
-            throw new NotImplementedException();
+            var list = new List<PredictedObject>();
+
+            Image image = buildAndVerifyImage(data);
+
+            ImagePrediction prediction = await _detectorClient.GetDetectedObjects(data);
+
+            HandwritingTextLine[] result = await this._detectorClient.GetTextRecognition(data);
+
+            if (prediction != null)
+            {
+                if (prediction.Predictions != null && prediction.Predictions.Any())
+                {
+                    var predictions = prediction.Predictions.ToList();
+
+                    removePredictionsUnderProbabilityThreshold(predictions);
+
+                    list = predictions.ConvertAll<PredictedObject>((p) =>
+                    {
+                        return buildPredictedObject(p, image, data);
+                    });
+
+                    removeUnusableImages(list);
+
+                    if (result != null)
+                    {
+                        foreach (var predictedObject in list)
+                        {
+                            assignPredictedText2(predictedObject, result);
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
 
         private static void removePredictionsUnderProbabilityThreshold(List<PredictionModel> predictions)

@@ -15,10 +15,12 @@ namespace Sketch2Code.AI
     {
 
         public ObjectDetector()
-            : base(ConfigurationManager.AppSettings["ObjectDetectionTrainingKey"],
-                   ConfigurationManager.AppSettings["ObjectDetectionPredictionKey"],
-                   ConfigurationManager.AppSettings["ObjectDetectionProjectName"])
+            : base(
+                  ConfigurationManager.AppSettings["ObjectDetectionTrainingKey"],
+                  ConfigurationManager.AppSettings["ObjectDetectionPredictionKey"],
+                  ConfigurationManager.AppSettings["ObjectDetectionProjectName"])
         {
+            
         }
 
         public ObjectDetector(string trainingKey, string predictionKey, string projectName) 
@@ -29,7 +31,13 @@ namespace Sketch2Code.AI
 
         public async Task<ImagePrediction> GetDetectedObjects(byte[] image)
         {
-            throw new NotImplementedException();
+            using (var endpoint = new PredictionEndpoint() { ApiKey = this._predictionApiKey })
+            {
+                using (var ms = new MemoryStream(image))
+                {
+                    return await endpoint.PredictImageAsync(this._project.Id, ms);
+                }
+            }
         }
 
         public async Task<List<String>> GetText(byte[] image)

@@ -38,7 +38,7 @@ namespace Sketch2Code.Core.Entities
         [DataMember]
         public BoundingBox BoundingBox { get; set; }
         [DataMember]
-        public IList<string> Text { get; set; }
+        public IList<string> Text { get; set; } = new List<string>();
         public byte[] SlicedImage { get; set; }
         [DataMember]
         public string Name { get; set; }
